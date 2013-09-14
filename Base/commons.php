@@ -11,7 +11,7 @@
  *@param string $key 配置数组键名
  */
 function C($key){
-	$ep_config=require(EP_PATH.'Conf/conf.php');
+	$ep_config=require_once(EP_PATH.'Conf/conf.php');
 	if(isset($ep_config[$key])){
 		return $ep_config[$key];
 	}
