@@ -2,12 +2,12 @@
 /**
  * EnterPrise Framework
  * 基本函数库
- * @version 0.1.0
+ * @version 0.1.2
  * @author Bokjan Chan
  **/
 /**
- *get_folder方法返回目录下文件名的索引数组
- *@param $path 相对目录
+ *返回目录下文件名的索引数组
+ *@param string $path 相对目录
  */
 function get_folder($path){
 	$scanner=opendir(EP_PATH.$path);
@@ -19,5 +19,20 @@ function get_folder($path){
 	}
 	closedir($scanner);
 	return $list;
+}
+/**
+ *包含一个第三方类
+ *@param string $name 类名(*.class.php)
+ *@param boolean $type=false 是否标准命名
+ *$type为假时，传入*.class.php的*即可
+ *为真时，传入完整名称如epdb.php
+ */
+function vendor($name,$type=false){
+	if ($type) {
+		require(EP_PATH.'Vendor/'.$name.'.class.php');
+	} else {
+		require(EP_PATH.'Vendor/'.$name);
+	}
+	return;
 }
 ?>

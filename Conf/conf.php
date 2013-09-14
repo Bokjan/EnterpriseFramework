@@ -2,7 +2,7 @@
 return array(
 	//'键'=>值,	
 	'DB_PREFIX'=>'',
-	'DB_HOST'=>'',
+	'DB_HOST'=>'localhost',
 	'DB_NAME'=>'',
 	'DB_USER'=>'',
 	'DB_PW'=>'',

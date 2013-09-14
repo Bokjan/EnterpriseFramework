@@ -2,13 +2,13 @@
 /**
  * EnterPrise Framework
  * 框架函数库（单字母方法）
- * @version 0.1.0
+ * @version 0.1.1
  * @author Bokjan Chan
  **/
 
 /**
- *C方法返回系统配置值
- *@param $key 配置数组键名
+ *返回系统配置值
+ *@param string $key 配置数组键名
  */
 function C($key){
 	$ep_config=require(EP_PATH.'Conf/conf.php');
@@ -20,8 +20,8 @@ function C($key){
 	}
 }
 /**
- *U方法返回一个URL地址
- *@param $string URL信息
+ *返回一个URL
+ *@param string $string URL信息
  */
 function U($string){
 	$sepe=C('URL_SEPE');
