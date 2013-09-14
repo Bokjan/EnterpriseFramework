@@ -1,0 +1,117 @@
+<?php
+/**
+ * EnterPrise Framework
+ * Controller控制器父类
+ * @author Bokjan Chan
+ * @version 0.1.0
+ */
+class Action{
+	/**
+	 *取得类名
+	 */
+	public $tVar=array();//模版变量数组
+
+	function __construct(){
+
+	}
+	/**
+	 *模版变量赋值
+	 *@param string||array $key 变量名||变量数组
+	 *@param $value 值
+	 *$value不是必须的
+	 *若第一个参数是数组，则直接整合
+	 *否则进行赋值操作
+	 */
+	function set($key,$value=''){
+		if (is_array($key)) {
+			$this->tVar=array_merge($this->tVar,$key);
+		} else {
+			$this->tVar[$key]=$value;
+		}
+	}
+	/**
+	 *成功操作
+	 *@param string $message 消息
+	 *@param string $jumpUrl (非必须)跳转URL
+	 */
+	function success($message,$jumpUrl=''){
+		$this->jump($message,$jumpUrl,1);
+	}
+	/**
+	 *错误操作
+	 *@param string $message 消息
+	 *@param string $jumpUrl (非必须)跳转URL
+	 */
+	function error($message,$jumpUrl=''){
+		$this->jump($message,$jumpUrl,0);
+	}
+	/**
+	 *跳转
+	 *@param string $message 消息
+	 *@param string $jumpUrl 跳转URL
+	 *@param integer $wait 等待秒数
+	 *@param integer $status 状态 0=>失败,1=>成功
+	 */
+	function jump($message,$jumpUrl='',$status=1){
+		if ($status) {
+			//$status=1为真，输出为success版本
+			$this->set('message',$message);
+			if(!isset($this->waitSecond)){
+				$this->set('waitSecond','2');
+			}
+			if ($jumpUrl=='') {
+				$this->set('jumpUrl',$_SERVER["HTTP_REFERER"]);
+			}else{
+				$this->set('jumpUrl',$jumpUrl);
+			}
+			$this->display('ep_success.tpl',false);
+		} else {
+			$this->set('error',$message);
+			if(!isset($this->waitSecond)){
+				$this->set('waitSecond','3');
+			}
+			if ($jumpUrl=='') {
+				$this->set('jumpUrl',"javascript:history.back(-1);");
+			}else{
+				$this->set('jumpUrl',$jumpUrl);
+			}
+			$this->display('ep_success.tpl',false);
+			exit;
+		}
+	}
+	/**
+	 *display输出
+	 *@param string $tpl='' 模版
+	 *@param boolean $type=true 种类(非必须)
+	 */
+	function display($tpl='',$type=true){
+		$sepe=C('URL_SEPE');
+		if ($sepe==NULL) {
+			$sepe='_';
+		}
+		if ($tpl=='') {
+			$action=str_replace('Action', '', ACTION);
+			$tpl=$action.$sepe.METHOD;
+		}
+		$this->render($tpl,$type);
+	}
+	/**
+	 *render输出
+	 *@param string $tpl 模版
+	 *@param boolean $type 种类(非必须)
+	 */
+	function render($tpl,$type){
+		if ($type) {
+			$tpl=$tpl.'.html';
+		}
+		extract($this->tVar, EXTR_OVERWRITE);
+		header("Content-type:text/html;charset=utf-8");
+        /*header('Cache-control: '.C('HTTP_CACHE_CONTROL'));
+        header('X-Powered-By: Servlet/2.5 JSP/2.1');
+		header('Server: HTTP Load Balancer/1.0');*/
+		include_once(EP_PATH.'Tpl/'.$tpl);
+
+	}
+
+}
+?>

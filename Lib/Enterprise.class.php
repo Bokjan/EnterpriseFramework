@@ -22,6 +22,8 @@ class Enterprise{
 		$path=explode($seperator, $path);
 		$action=$path[0].'Action';
 		$method=$path[1];
+		define('ACTION',$action);
+		define('METHOD',$method);
 		unset($path[0],$path[1]);
 		$key=array();
 		$value=array();
@@ -38,7 +40,9 @@ class Enterprise{
 		 *注：若?后的GET参数与pathinfo中有重复，则以pathinfo为准
 		 */
 		if (method_exists($action,$method)) {
-			eval($action.'::'.$method.'();');
+			$ep_prog=new $action();
+			$ep_prog->$method();
+			//eval($action.'::'.$method.'();');
 		} else {
 			echo 'no';
 			/*此处应执行异常处理，暂未完成异常处理方法*/
