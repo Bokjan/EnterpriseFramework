@@ -2,7 +2,7 @@
 /**
  * EnterPrise Framework
  * 基本函数库
- * @version 0.1.2
+ * @version 0.1.3
  * @author Bokjan Chan
  **/
 /**

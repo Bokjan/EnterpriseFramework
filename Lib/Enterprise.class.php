@@ -3,11 +3,32 @@
  * EnterPrise Framework
  * 框架运行静态类
  * @author Bokjan Chan
- * @version 0.1
+ * @version 0.1.2
  */
 class Enterprise{
 	static function run(){
-		self::dispatcher();
+		$path=explode('index.php', $_SERVER['REQUEST_URI']);
+		if(!isset($path[1])){
+			$method=C('DEFAULT_METHOD');
+			if($method==NULL){
+				$ep_prog=new IndexAction();
+				$ep_prog->index();
+				define('ACTION','IndexAction');
+				define('METHOD','Index');
+			}
+			else{
+				$method=explode('/', $method);
+				$action=$method[0].'Action';
+				$method=$method[1];
+				define('ACTION',$action);
+				define('METHOD',$method);
+				$ep_prog=new $action();
+				$ep_prog->$method();
+			}
+		}
+		else{
+			self::dispatcher();
+		}
 	}
 	static function dispatcher(){
 		$path=$_SERVER['REQUEST_URI'];
@@ -42,11 +63,19 @@ class Enterprise{
 		if (method_exists($action,$method)) {
 			$ep_prog=new $action();
 			$ep_prog->$method();
-			//eval($action.'::'.$method.'();');
 		} else {
-			echo 'no';
-			/*此处应执行异常处理，暂未完成异常处理方法*/
+			$message='方法\''.$action.'::'.$method.'()\'不存在！';
+			$ep_prog=new EpException();
+			$ep_prog->output($message);
+			exit;
 		}
+	}
+}
+class EpException extends Action{
+	function output($message){
+		$this->set('message',$message);
+		$this->display('ep_exception.tpl');
+		exit;
 	}
 }
 ?>

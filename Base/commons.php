@@ -11,7 +11,7 @@
  *@param string $key 配置数组键名
  */
 function C($key){
-	$ep_config=require_once(EP_PATH.'Conf/conf.php');
+	$ep_config=require(EP_PATH.'Conf/conf.php');
 	if(isset($ep_config[$key])){
 		return $ep_config[$key];
 	}
@@ -50,5 +50,16 @@ function U($string){
 	}
 	$url.=C('URL_SUFFIX');
 	return $url;
+}
+/**
+ *数据库模型实例化
+ *@param string $table 数据表名
+ */
+function M($table=''){
+	if($table==''){
+		return;
+	}
+	$ep_obj=new epdb($table);
+	return $ep_obj;
 }
 ?>

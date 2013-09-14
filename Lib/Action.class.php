@@ -3,7 +3,7 @@
  * EnterPrise Framework
  * Controller控制器父类
  * @author Bokjan Chan
- * @version 0.1.0
+ * @version 0.1.1
  */
 class Action{
 	/**
@@ -11,9 +11,6 @@ class Action{
 	 */
 	public $tVar=array();//模版变量数组
 
-	function __construct(){
-
-	}
 	/**
 	 *模版变量赋值
 	 *@param string||array $key 变量名||变量数组
@@ -64,7 +61,7 @@ class Action{
 			}else{
 				$this->set('jumpUrl',$jumpUrl);
 			}
-			$this->display('ep_success.tpl',false);
+			$this->display('ep_success.tpl');
 		} else {
 			$this->set('error',$message);
 			if(!isset($this->waitSecond)){
@@ -75,7 +72,7 @@ class Action{
 			}else{
 				$this->set('jumpUrl',$jumpUrl);
 			}
-			$this->display('ep_success.tpl',false);
+			$this->display('ep_success.tpl');
 			exit;
 		}
 	}
@@ -84,34 +81,31 @@ class Action{
 	 *@param string $tpl='' 模版
 	 *@param boolean $type=true 种类(非必须)
 	 */
-	function display($tpl='',$type=true){
-		$sepe=C('URL_SEPE');
-		if ($sepe==NULL) {
-			$sepe='_';
-		}
+	function display($tpl=''){
 		if ($tpl=='') {
-			$action=str_replace('Action', '', ACTION);
-			$tpl=$action.$sepe.METHOD;
+			$sepe=C('URL_SEPE');
+			if ($sepe==NULL) {
+				$sepe='_';
+			}
+			if ($tpl=='') {
+				$action=str_replace('Action', '', ACTION);
+				$tpl=$action.$sepe.METHOD.'.html';
+			}
 		}
-		$this->render($tpl,$type);
+		$this->render($tpl);
 	}
 	/**
 	 *render输出
 	 *@param string $tpl 模版
 	 *@param boolean $type 种类(非必须)
 	 */
-	function render($tpl,$type){
-		if ($type) {
-			$tpl=$tpl.'.html';
-		}
+	function render($tpl){
 		extract($this->tVar, EXTR_OVERWRITE);
 		header("Content-type:text/html;charset=utf-8");
         /*header('Cache-control: '.C('HTTP_CACHE_CONTROL'));
         header('X-Powered-By: Servlet/2.5 JSP/2.1');
 		header('Server: HTTP Load Balancer/1.0');*/
 		include_once(EP_PATH.'Tpl/'.$tpl);
-
 	}
-
 }
 ?>

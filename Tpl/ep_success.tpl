@@ -5,7 +5,7 @@
 <title>跳转中……</title>
 <style type="text/css">
 <!--
-body{background:#29689E;font-family:"Segoe UI Light","微软雅黑";font-size:12px;}.main{background-color:#29689E;line-height:300%;font-size:17px;color:#FFFFFF;width:650px;margin:100px  auto;border-radius:10px;padding:20px 80px;list-style:none;}.main p{font-size:150px;}a:link{color:#FFFFFF;text-decoration:none;}a:visited{color:#FFFFFF;text-decoration:none;}a:hover{color:#FFFFFF;text-decoration:none;}a:active{color:#FFFFFF;text-decoration:none;}
+body{background:#29689E;font-family:"微软雅黑";font-size:12px;}.main{background-color:#29689E;line-height:300%;font-size:17px;color:#FFFFFF;width:650px;margin:100px  auto;border-radius:10px;padding:20px 80px;list-style:none;}.main p{font-size:150px;}a:link{color:#FFFFFF;text-decoration:none;}a:visited{color:#FFFFFF;text-decoration:none;}a:hover{color:#FFFFFF;text-decoration:none;}a:active{color:#FFFFFF;text-decoration:none;}
 -->
 </style>
 </head>

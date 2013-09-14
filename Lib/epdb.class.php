@@ -1,6 +1,7 @@
 <?php
 /**
  * epdb - EnterPrise Database Class
+ * Transplanted from Egg Pain Database
  * Copyright (c) 2013 Bokjan Chan
  * For more information, visit bokjan.com
  * @author Bokjan Chan
