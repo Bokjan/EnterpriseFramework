@@ -8,15 +8,20 @@
 
 /**
  *返回系统配置值
- *@param string $key 配置数组键名
+ *@param string $key 配置数组键名(可选)
  */
 function C($key){
 	$ep_config=require(EP_PATH.'Conf/conf.php');
-	if(isset($ep_config[$key])){
-		return $ep_config[$key];
-	}
-	else{
-		return NULL;
+
+	if (isset($key)) {
+			if(isset($ep_config[$key])){
+			return $ep_config[$key];
+		}
+		else{
+			return NULL;
+		}
+	} else {
+		return $ep_config;
 	}
 }
 /**

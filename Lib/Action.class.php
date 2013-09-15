@@ -3,14 +3,10 @@
  * EnterPrise Framework
  * Controller控制器父类
  * @author Bokjan Chan
- * @version 0.1.1
+ * @version 0.1.2
  */
 class Action{
-	/**
-	 *取得类名
-	 */
-	public $tVar=array();//模版变量数组
-
+	private $tVar=array();//模版变量数组
 	/**
 	 *模版变量赋值
 	 *@param string||array $key 变量名||变量数组

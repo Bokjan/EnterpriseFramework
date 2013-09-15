@@ -2,7 +2,7 @@
 /**
  * EnterPrise Framework
  * 基本函数库
- * @version 0.1.3
+ * @version 0.1.4
  * @author Bokjan Chan
  **/
 /**
@@ -34,5 +34,47 @@ function vendor($name,$type=false){
 		require(EP_PATH.'Vendor/'.$name);
 	}
 	return;
+}
+/**
+ *简化的cookie操作
+ *@param string $name 名
+ *@param string $value=NULL 值
+ *@param int $expire=NULL 过期时间
+ */
+function cookie($name,$value=NULL,$expire=NULL){
+	if ($value==NULL) {
+		if (isset($_COOKIE[$name])) {
+			return $_COOKIE[$name];
+		} else {
+			return NULL;
+		}
+		
+	} else {
+		$time=time();
+		if ($expire==NULL){
+			setcookie($name,$value,$time+3600);
+		} else {
+			setcookie($name,$value,$time+$expire);
+		}
+		return;
+	}
+}
+/**
+ *简化的cookie操作
+ *@param string $name 名
+ *@param string $value=NULL 值
+ */
+function session($name,$value=NULL){
+	session_start();
+	if ($value==NULL) {
+		if (isset($_SESSION[$name])) {
+			return $_SESSION[$name];
+		} else {
+			return NULL;
+		}
+	} else {
+		$_SESSION[$name]=$value;
+		return;
+	}
 }
 ?>
