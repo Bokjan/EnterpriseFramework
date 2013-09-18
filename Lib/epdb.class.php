@@ -7,7 +7,7 @@
  * @author Bokjan Chan
  * @copyright Copyright (c) 2013, Bokjan Chan
  * @link https://bokjan.com
- * @version 0.1.9
+ * @version 0.2.0
  */
 class epdb{
 	public function __construct($table){
@@ -31,17 +31,13 @@ class epdb{
 	}
 
 	public function getPk(){
-		$conn_host=C('DB_HOST').':'.C('DB_PORT');
-		mysql_connect($conn_host,C('DB_USER'),C('DB_PW'));
 		$query="SELECT `COLUMN_NAME` FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `table_name`='{$this->table}' AND `COLUMN_KEY`='PRI'";
-		$result=mysql_query($query);
-		if(mysql_num_rows($result)>0){
-			$result=mysql_fetch_assoc($result);
-			mysql_close();
-			return $result['COLUMN_NAME'];
+		$res=$this->execute($query);
+		if($res!=NULL){
+			$res=mysql_fetch_assoc($res);
+			return $res['COLUMN_NAME'];
 		}
 		else{
-			mysql_close();
 			return false;
 		}
 	}
