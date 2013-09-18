@@ -79,7 +79,7 @@ class Action{
 	 */
 	function display($tpl=''){
 		if ($tpl=='') {
-			$sepe=C('URL_SEPE');
+			$sepe=C('TPL_SEPE');
 			if ($sepe==NULL) {
 				$sepe='_';
 			}

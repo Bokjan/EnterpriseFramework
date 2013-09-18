@@ -2,7 +2,7 @@
 /**
  * EnterPrise Framework
  * 框架函数库（单字母方法）
- * @version 0.1.2
+ * @version 0.1.3
  * @author Bokjan Chan
  **/
 /**
@@ -45,28 +45,41 @@ function U($string){
 	if($sepe==NULL){
 		$sepe='/';
 	}
-	$string=explode('?', $string);
-	$class=explode('/', $string[0]);
-	$param=explode('&', $string[1]);
-	$url=$class[0].$sepe.$class[1].$sepe;
-	$i=1;
-	$j=count($param);
-	foreach ($param as $element) {
-		$element=explode('=', $element);
-		$url.=$element[0].$sepe.$element[1];
-		if($i<$j){
-			$url.=$sepe;
+	if(strstr($string, '?')){
+		$string=explode('?', $string);
+		$class=explode('/', $string[0]);
+		$param=explode('&', $string[1]);
+		$url=$class[0].$sepe.$class[1].$sepe;
+		$i=1;
+		$j=count($param);
+		foreach ($param as $element) {
+			$element=explode('=', $element);
+			$url.=$element[0].$sepe.$element[1];
+			if($i<$j){
+				$url.=$sepe;
+			}
+			$i++;
 		}
-		$i++;
-	}
-	if(C('URL_MODE')==NULL||C('URL_MODE')==0){
-		$url='./index.php/'.$url;
+		if(C('URL_MODE')==NULL||C('URL_MODE')==0){
+			$url='./index.php/'.$url;
+		}
+		else{
+			$url='./'.$url;
+		}
+		$url.=C('URL_SUFFIX');
+		return $url;
 	}
 	else{
-		$url='./'.$url;
+		$class=explode('/', $string);
+		if(C('URL_MODE')==NULL||C('URL_MODE')==0){
+			$url='./index.php/';
+		}
+		else{
+			$url='./';
+		}
+		$url.=$class[0].$sepe.$class[1].C('URL_SUFFIX');
+		return $url;
 	}
-	$url.=C('URL_SUFFIX');
-	return $url;
 }
 /**
  *数据库模型实例化
@@ -74,7 +87,7 @@ function U($string){
  */
 function M($table=''){
 	if($table==''){
-		return;
+		return NULL;
 	}
 	$ep_obj=new epdb($table);
 	return $ep_obj;
