@@ -1,12 +1,12 @@
 <?php
 return array(
 	//'键'=>值,	
-	'DB_PREFIX'=>'pre_',
-	'DB_HOST'=>'localhost',
-	'DB_NAME'=>'1307',
-	'DB_USER'=>'root',
+	'DB_PREFIX'=>'',
+	'DB_HOST'=>'',
+	'DB_NAME'=>'',
+	'DB_USER'=>'',
 	'DB_PW'=>'',
-	'DB_PORT'=>'3306',
+	'DB_PORT'=>'',
 	'DB_USEPREFIX'=>true,
 	//'URL_SEPE'=>'-',
 	'URL_SUFFIX'=>'.html',
