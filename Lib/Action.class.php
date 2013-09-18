@@ -3,13 +3,13 @@
  * EnterPrise Framework
  * Controller控制器父类
  * @author Bokjan Chan
- * @version 0.1.2
+ * @version 0.1.3
  */
 class Action{
 	private $tVar=array();//模版变量数组
 	/**
 	 *模版变量赋值
-	 *@param string||array $key 变量名||变量数组
+	 *@param mixed $key 变量名/变量数组
 	 *@param $value 值
 	 *$value不是必须的
 	 *若第一个参数是数组，则直接整合

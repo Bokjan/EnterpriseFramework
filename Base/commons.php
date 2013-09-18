@@ -2,17 +2,29 @@
 /**
  * EnterPrise Framework
  * 框架函数库（单字母方法）
- * @version 0.1.1
+ * @version 0.1.2
  * @author Bokjan Chan
  **/
-
+/**
+ *快速实例化
+ *@param string $class 类名
+ */
+function I($class){
+	return new $class();
+}
 /**
  *返回系统配置值
  *@param string $key 配置数组键名(可选)
  */
+$_config=require(EP_PATH.'Conf/conf.php');
+C($_config);
+unset($_config);
 function C($key){
-	$ep_config=require(EP_PATH.'Conf/conf.php');
-
+	static $ep_config = array();
+	//读入配置
+	if(is_array($key)){
+		return $ep_config=$key;
+	}
 	if (isset($key)) {
 			if(isset($ep_config[$key])){
 			return $ep_config[$key];

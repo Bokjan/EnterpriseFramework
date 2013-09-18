@@ -1,7 +1,8 @@
 <?php
 class IndexAction extends Action{
 	function index(){
-		$this->success('OK');
+		//$this->success('OK');
+		print_r($_SERVER);
 	}
 }
 ?>

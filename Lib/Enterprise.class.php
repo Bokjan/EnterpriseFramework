@@ -8,7 +8,7 @@
 class Enterprise{
 	static function run(){
 		$path=explode('index.php', $_SERVER['REQUEST_URI']);
-		if(!isset($path[1])){
+		if(!isset($path[1])||$path[1]==''){
 			$method=C('DEFAULT_METHOD');
 			if($method==NULL){
 				$ep_prog=new IndexAction();

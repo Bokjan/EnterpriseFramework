@@ -2,7 +2,7 @@
 /**
  * EnterPrise Framework
  * 基本函数库
- * @version 0.1.4
+ * @version 0.1.5
  * @author Bokjan Chan
  **/
 /**
@@ -75,6 +75,22 @@ function session($name,$value=NULL){
 	} else {
 		$_SESSION[$name]=$value;
 		return;
+	}
+}
+/**
+ *内存开销统计
+ *@param string $type=NULL 返回类型种类(千字节/兆字节)(非必须)
+ */
+function memory_stat($type=NULL){
+	$memory=memory_get_usage();
+	if($type=='KB'){
+		return round(($memory/1024),6);
+	}
+	elseif($type=='MB'){
+		return round(($memory/1048576),6);
+	}
+	else{
+		return $memory;
 	}
 }
 ?>

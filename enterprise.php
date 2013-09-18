@@ -12,8 +12,8 @@ require(EP_PATH.'Base/commons.php');
 foreach (get_folder('Lib') as $name) {
 	require(EP_PATH.'Lib/'.$name);
 }
-foreach (get_folder('Function') as $name) {
-	require(EP_PATH.'Function/'.$name);
+foreach (get_folder('Model') as $name) {
+	require(EP_PATH.'Model/'.$name);
 }
 foreach (get_folder('Action') as $name) {
 	require(EP_PATH.'Action/'.$name);
