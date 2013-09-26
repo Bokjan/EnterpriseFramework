@@ -23,7 +23,7 @@ function C($key){
 	static $ep_config = array();
 	//读入配置
 	if(is_array($key)){
-		return $ep_config=$key;
+		return $ep_config=array_merge($ep_config,$key);
 	}
 	if (isset($key)) {
 			if(isset($ep_config[$key])){
