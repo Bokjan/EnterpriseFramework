@@ -3,7 +3,7 @@
  * EnterPrise Framework
  * 框架运行静态类
  * @author Bokjan Chan
- * @version 0.1.2
+ * @version 0.1.3
  */
 class Enterprise{
 	static function run(){
