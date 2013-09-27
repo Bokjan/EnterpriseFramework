@@ -40,20 +40,25 @@ class Enterprise{
 		}
 		$path=str_replace($_SERVER['SCRIPT_NAME'].'/', '', $path);
 		$path=str_replace(C('URL_SUFFIX'),'',$path);
-		$path=explode($seperator, $path);
-		$action=$path[0].'Action';
-		$method=$path[1];
+		if (strstr($path, $seperator)) {
+			$path=explode($seperator, $path);
+			$action=$path[0].'Action';
+			$method=$path[1];
+			unset($path[0],$path[1]);
+			$key=array();
+			$value=array();
+			foreach ($path as $k => $v) {
+				if ($k%2==0) {
+					$k++;
+					$_GET[$v]=$path[$k];
+				}
+			}
+		} else {
+			$action=$path.'Action';
+			$method='index';
+		}
 		define('ACTION',$action);
 		define('METHOD',$method);
-		unset($path[0],$path[1]);
-		$key=array();
-		$value=array();
-		foreach ($path as $k => $v) {
-			if ($k%2==0) {
-				$k++;
-				$_GET[$v]=$path[$k];
-			}
-		}
 		/**
 		 *$action 调用的控制器名
 		 *$method 调用的对应方法名
