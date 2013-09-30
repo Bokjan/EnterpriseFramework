@@ -14,9 +14,8 @@ class ImVerify {
         $chars=str_shuffle($chars);
         $randval=substr($chars,0,$length);
         session($verifyName, md5($randval));
-        cookie($verifyName, md5($randval));
         $width = ($length * 10 + 10) > $width ? $length * 10 + 10 : $width;
-        if ($type != 'gif' && function_exists('imagecreatetruecolor')) {
+        if (function_exists('imagecreatetruecolor')) {
             $im = imagecreatetruecolor($width, $height);
         } else {
             $im = imagecreate($width, $height);
