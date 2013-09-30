@@ -14,7 +14,7 @@ function get_folder($path){
 	$scanner=opendir(EP_PATH.$path);
 	$list=array();
 	while(($file=readdir($scanner))!==false){
-		if ($file!='.'&&$file!='..') {
+		if ($file!='.'&&$file!='..'&&strstr($file, '.php')) {
 			$list[]=$file;
 		}
 	}

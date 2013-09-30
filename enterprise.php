@@ -10,14 +10,10 @@ require(EP_PATH.'Base/functions.php');
 require(EP_PATH.'Base/commons.php');
 //读取其他框架文件
 foreach (get_folder('Lib') as $name) {
-	if($name!='Util'){
-		require(EP_PATH.'Lib/'.$name);
-	}
+	require(EP_PATH.'Lib/'.$name);
 }
 foreach (get_folder('Model') as $name) {
-	if($name!='README'){
-		require(EP_PATH.'Model/'.$name);
-	}
+	require(EP_PATH.'Model/'.$name);
 }
 foreach (get_folder('Action') as $name) {
 	require(EP_PATH.'Action/'.$name);
