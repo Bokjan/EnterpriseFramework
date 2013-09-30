@@ -2,19 +2,21 @@
 /**
  * EnterPrise Framework
  * 框架函数库（单字母方法）
- * @version 0.1.4
+ * @version 0.1.5
  * @author Bokjan Chan
  **/
 /**
  *快速实例化
  *@param string $class 类名
+ *@return object 被实例化的对象
  */
 function I($class){
 	return new $class();
 }
 /**
- *返回系统配置值
- *@param string $key 配置数组键名(可选)
+ *项目配置相关
+ *@param string $key 配置数组键名(可选) | array 配置值
+ *@return mixed 相应配置
  */
 $_config=require(EP_PATH.'Conf/conf.php');
 C($_config);
@@ -39,6 +41,7 @@ function C($key){
 /**
  *返回一个URL
  *@param string $string URL信息
+ *@return string URL
  */
 function U($string){
 	$sepe=C('URL_SEPE');
@@ -84,6 +87,7 @@ function U($string){
 /**
  *数据库模型实例化
  *@param string $table 数据表名
+ *@return object 数据库操作对象
  */
 function M($table=''){
 	if($table==''){
@@ -96,7 +100,8 @@ function M($table=''){
  *文件缓存方法
  *@param string $key 缓存文件键
  *@param mixed $value 缓存数据
- *@param int $expire 过期时间(秒)
+ *@param integer $expire 过期时间(秒)
+ *@return NULL | mixed
  */
 function F($key,$value=NULL,$expire=NULL){
 	if ($value==NULL) {
