@@ -14,12 +14,14 @@ cloader();
 //读取配置
 $_config=require(EP_PATH.'Conf/conf.php');
 C($_config);
-unset($_config);
+//初始化钩子
+$_wrapper=require(EP_PATH.'Conf/wrapper.php');
+W($_wrapper);
 //读取其他框架文件
 foreach (get_folder('Lib') as $name) {
 	require(EP_PATH.'Lib/'.$name);
 }
-unset($name);
+unset($_config,$_wrapper,$name);
 //运行框架
 Enterprise::run();
 ?>

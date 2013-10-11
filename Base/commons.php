@@ -2,7 +2,7 @@
 /**
  * EnterPrise Framework
  * 框架函数库（单字母方法）
- * @version 0.1.5
+ * @version 0.1.6
  * @author Bokjan Chan
  **/
 /**
@@ -128,5 +128,21 @@ function F($key,$value=NULL,$expire=NULL){
 		file_put_contents(EP_PATH.'Base/Cache/'.$key.'.cache', $value);
 		return;
 	}
+}
+/**
+ *钩子语句方法
+ *@param string $key 语句键名
+ *@return void
+ */
+function W($key){
+	static $ep_wrapper = array();
+	//读入配置
+	if(is_array($key)){
+		return $ep_wrapper=array_merge($ep_wrapper,$key);
+	}
+	if(isset($ep_wrapper[$key])){
+		eval($ep_wrapper[$key]);
+	}
+	return;
 }
 ?>
