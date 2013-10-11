@@ -18,9 +18,6 @@ function I($class){
  *@param string $key 配置数组键名(可选) | array 配置值
  *@return mixed 相应配置
  */
-$_config=require(EP_PATH.'Conf/conf.php');
-C($_config);
-unset($_config);
 function C($key){
 	static $ep_config = array();
 	//读入配置

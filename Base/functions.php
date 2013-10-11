@@ -2,9 +2,31 @@
 /**
  * EnterPrise Framework
  * 基本函数库
- * @version 0.1.6
+ * @version 0.1.7
  * @author Bokjan Chan
  **/
+/**
+ *调用类时自动包含对应文件
+ *@return void
+ */
+function cloader($class=NULL){
+	static $list;
+	if ($init!=NULL) {
+		$class=strtolower($class);
+		foreach($list as $file){
+			if(strstr(strtolower($file), $class)){
+				require_once(EP_PATH.$file);
+			}
+		}
+	} else {
+		foreach(get_folder('Model') as $name){
+			$list[]='Model/'.$name;
+		}
+		foreach(get_folder('Action') as $name){
+			$list[]='Action/'.$name;
+		}
+	}
+}
 /**
  *返回目录下文件名的索引数组
  *@param string $path 相对目录
