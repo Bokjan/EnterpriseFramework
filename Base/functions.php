@@ -11,7 +11,7 @@
  */
 function cloader($class=NULL){
 	static $list;
-	if ($init!=NULL) {
+	if ($class!=NULL) {
 		$class=strtolower($class);
 		foreach($list as $file){
 			if(strstr(strtolower($file), $class)){
