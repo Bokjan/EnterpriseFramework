@@ -97,11 +97,13 @@ class Action{
 	 */
 	function render($tpl){
 		extract($this->tVar, EXTR_OVERWRITE);
+		if(extension_loaded('zlib')&&C('GZIP')){ob_start('ob_gzhandler');}
 		header("Content-type:text/html;charset=utf-8");
         /*header('Cache-control: '.C('HTTP_CACHE_CONTROL'));
         header('X-Powered-By: Servlet/2.5 JSP/2.1');
 		header('Server: HTTP Load Balancer/1.0');*/
 		include_once(EP_PATH.'Tpl/'.$tpl);
+		if(extension_loaded('zlib')&&C('GZIP')){ob_end_flush();}
 	}
 }
 ?>

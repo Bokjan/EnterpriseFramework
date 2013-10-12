@@ -39,6 +39,7 @@ class Enterprise{
 			$seperator='/';
 		}
 		$path=str_replace($_SERVER['SCRIPT_NAME'].'/', '', $path);
+		$path=str_replace('index.php/','',$path);
 		$path=str_replace(C('URL_SUFFIX'),'',$path);
 		if (strstr($path, $seperator)) {
 			$path=explode($seperator, $path);

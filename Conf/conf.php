@@ -13,5 +13,6 @@ return array(
 	'URL_MODE'=>1,//0=>一般PATHINFO,1=>REWRITE+PATHINFO
 	//'TPL_SEPE'=>'-';
 	//'DEFAULT_METHOD'=>'index/test',
+	'GZIP'=>true,
 	);
 ?>

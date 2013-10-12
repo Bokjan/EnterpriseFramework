@@ -10,7 +10,7 @@
  * @version 0.2.0
  */
 class epdb{
-	public function __construct($table){
+	function __construct($table){
 		if (C('DB_USEPREFIX')) {
 			$this->table=C('DB_PREFIX').$table;
 		} else {
@@ -28,6 +28,10 @@ class epdb{
 		else{
 			$this->table=$table;
 		}
+	}
+
+	function __destruct(){
+		mysql_close($this->conn);
 	}
 
 	public function getPk(){

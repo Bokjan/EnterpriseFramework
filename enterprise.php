@@ -1,7 +1,7 @@
 <?php
 /**
  * EnterPrise Framework
- * @version 0.1.2
+ * @version 0.1.3
  * @author Bokjan Chan
  **/
 defined('EP_PATH') or define('EP_PATH', dirname($_SERVER['SCRIPT_FILENAME']).'/');
@@ -17,6 +17,31 @@ C($_config);
 //初始化钩子
 $_wrapper=require(EP_PATH.'Conf/wrapper.php');
 W($_wrapper);
+//睿云引擎相关
+if (SMARTCLOUD) {
+	if(function_exists('saeAutoLoader')){
+		define('IS_CLOUD', true);
+		define('IS_SAE',true);
+		define('IS_SAE',false);
+		define('CLOUD_TYPE', 'SAE');
+	}
+	if(isset($_SERVER['HTTP_BAE_ENV_APPID'])){
+		define('IS_CLOUD', true);
+		define('IS_BAE',true);
+		define('IS_SAE',false);
+		define('CLOUD_TYPE', 'BAE');
+	}
+}
+else{
+	define('IS_CLOUD', false);
+	define('IS_SAE',false);
+	define('IS_SAE',false);
+}
+if (IS_CLOUD) {
+	require(EP_PATH.'Base/io_'.strtolower(CLOUD_TYPE).'.php');
+} else {
+	require(EP_PATH.'Base/io.php');
+}
 //读取其他框架文件
 foreach (get_folder('Lib') as $name) {
 	require(EP_PATH.'Lib/'.$name);
