@@ -5,6 +5,10 @@
  * @version 0.1.0
  * @author Bokjan Chan
  **/
+//SAE REQUIRE
+require_once(EP_PATH.'Lib/Enterprise.class.php');
+require_once(EP_PATH.'Lib/epdb.class.php');
+require_once(EP_PATH.'Lib/Action.class.php');
 //设置数据库
 $data=array(
 	'DB_USER'=>SAE_MYSQL_USER,

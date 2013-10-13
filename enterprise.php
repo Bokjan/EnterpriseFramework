@@ -22,7 +22,7 @@ if (SMARTCLOUD) {
 	if(function_exists('saeAutoLoader')){
 		define('IS_CLOUD', true);
 		define('IS_SAE',true);
-		define('IS_SAE',false);
+		define('IS_BAE',false);
 		define('CLOUD_TYPE', 'SAE');
 	}
 	if(isset($_SERVER['HTTP_BAE_ENV_APPID'])){
@@ -44,7 +44,7 @@ if (IS_CLOUD) {
 }
 //读取其他框架文件
 foreach (get_folder('Lib') as $name) {
-	require(EP_PATH.'Lib/'.$name);
+	require_once(EP_PATH.'Lib/'.$name);
 }
 unset($_config,$_wrapper,$name);
 //运行框架
