@@ -1,7 +1,7 @@
 <?php
 /**
  * EnterPrise Framework
- * @version 0.1.3
+ * @version 0.1.4
  * @author Bokjan Chan
  **/
 defined('EP_PATH') or define('EP_PATH', dirname($_SERVER['SCRIPT_FILENAME']).'/');
@@ -19,23 +19,26 @@ $_wrapper=require(EP_PATH.'Conf/wrapper.php');
 W($_wrapper);
 //睿云引擎相关
 if (SMARTCLOUD) {
+	//检测是否为新浪应用引擎
 	if(function_exists('saeAutoLoader')){
 		define('IS_CLOUD', true);
 		define('IS_SAE',true);
 		define('IS_BAE',false);
-		define('CLOUD_TYPE', 'SAE');
+		defined('CLOUD_TYPE') or define('CLOUD_TYPE', 'SAE');
 	}
+	//检测是否为百度应用引擎
 	if(isset($_SERVER['HTTP_BAE_ENV_APPID'])){
 		define('IS_CLOUD', true);
 		define('IS_BAE',true);
 		define('IS_SAE',false);
-		define('CLOUD_TYPE', 'BAE');
+		defined('CLOUD_TYPE') or define('CLOUD_TYPE', 'BAE');
 	}
 }
 else{
 	define('IS_CLOUD', false);
 	define('IS_SAE',false);
-	define('IS_SAE',false);
+	define('IS_BAE',false);
+	define('CLOUD_TYPE',NULL);
 }
 if (IS_CLOUD) {
 	require(EP_PATH.'Base/io_'.strtolower(CLOUD_TYPE).'.php');

@@ -2,13 +2,17 @@
 /**
  * EnterPrise Framework
  * IO函数及初始化操作_新浪引擎
- * @version 0.1.0
+ * @version 0.1.1
  * @author Bokjan Chan
  **/
-//SAE REQUIRE
+//SAE REQUIRE 1
 require_once(EP_PATH.'Lib/Enterprise.class.php');
 require_once(EP_PATH.'Lib/epdb.class.php');
 require_once(EP_PATH.'Lib/Action.class.php');
+//SAE REQUIRE 2
+/*foreach(get_folder('Lib') as $name){
+	require_once(EP_PATH.'Lib/'.$name);
+}*/
 //设置数据库
 $data=array(
 	'DB_USER'=>SAE_MYSQL_USER,
