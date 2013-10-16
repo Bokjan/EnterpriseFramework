@@ -98,14 +98,14 @@ function M($table=''){
  *@param string $key 语句键名
  *@return void
  */
-function W($key){
-	static $ep_wrapper = array();
+function H($key){
+	static $ep_hook = array();
 	//读入配置
 	if(is_array($key)){
-		return $ep_wrapper=array_merge($ep_wrapper,$key);
+		return $ep_hook=array_merge($ep_hook,$key);
 	}
-	if(isset($ep_wrapper[$key])){
-		eval($ep_wrapper[$key]);
+	if(isset($ep_hook[$key])){
+		eval($ep_hook[$key]);
 	}
 	return;
 }

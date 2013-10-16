@@ -13,10 +13,16 @@ function cloader($class=NULL){
 	static $list;
 	if ($class!=NULL) {
 		$class=strtolower($class);
+		$mark=false;
 		foreach($list as $file){
 			if(strstr(strtolower($file), $class)){
 				require_once(EP_PATH.$file);
+				$mark=true;
 			}
+		}
+		if(!$mark){
+			$ep_prog=new EpException();
+			$ep_prog->output("无法加载类{$class}");
 		}
 	} else {
 		foreach(get_folder('Model') as $name){

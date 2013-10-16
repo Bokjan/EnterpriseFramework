@@ -15,8 +15,8 @@ cloader();
 $_config=require(EP_PATH.'Conf/conf.php');
 C($_config);
 //初始化钩子
-$_wrapper=require(EP_PATH.'Conf/wrapper.php');
-W($_wrapper);
+$_hook=require(EP_PATH.'Conf/hook.php');
+H($_hook);
 //睿云引擎相关
 if (SMARTCLOUD) {
 	//检测是否为新浪应用引擎
