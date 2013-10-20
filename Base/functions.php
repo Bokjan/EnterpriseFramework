@@ -135,4 +135,14 @@ function memory_stat($type=NULL){
 		return $memory;
 	}
 }
+/**
+ *运行时间计算
+ *@return int 运行耗时（毫秒）
+ */
+function time_stat(){
+	$now=explode(' ', microtime());
+	$now=$now[0]+$now[1];
+	$total=($now-EP_START)*1000;
+	return round($total,4);
+}
 ?>

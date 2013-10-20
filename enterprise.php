@@ -5,6 +5,10 @@
  * @author Bokjan Chan
  **/
 defined('EP_PATH') or define('EP_PATH', dirname($_SERVER['SCRIPT_FILENAME']).'/');
+//计时开始
+$ep_start=explode(' ',microtime());
+define('EP_START',($ep_start[0]+$ep_start[1]));
+unset($ep_start);
 //读取基本方法
 require(EP_PATH.'Base/functions.php');
 require(EP_PATH.'Base/commons.php');
