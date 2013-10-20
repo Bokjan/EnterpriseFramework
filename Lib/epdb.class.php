@@ -19,15 +19,17 @@ class epdb{
 		$conn_host=C('DB_HOST').':'.C('DB_PORT');
 		$this->conn=mysql_connect($conn_host,C('DB_USER'),C('DB_PW'));
 		mysql_query('SET NAMES UTF8');
+		return;
 	}
 
 	public function table($table){
-		if($this->useprefix){
+		if(C('DB_USEPREFIX')){
 			$this->table=C('DB_PREFIX').$table;
 		}
 		else{
 			$this->table=$table;
 		}
+		return;
 	}
 
 	function __destruct(){
