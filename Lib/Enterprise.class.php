@@ -3,12 +3,11 @@
  * EnterPrise Framework
  * 框架运行静态类
  * @author Bokjan Chan
- * @version 0.1.3
+ * @version 0.1.4
  */
 class Enterprise{
 	static function run(){
-		$path=explode('index.php', $_SERVER['REQUEST_URI']);
-		if(!isset($path[1])||$path[1]==''){
+		if(empty($_SERVER['PATH_INFO'])){
 			$method=C('DEFAULT_METHOD');
 			if($method==NULL){
 				$ep_prog=new IndexAction();
@@ -31,15 +30,13 @@ class Enterprise{
 		}
 	}
 	static function dispatcher(){
-		$path=$_SERVER['REQUEST_URI'];
+		$path=$_SERVER['PATH_INFO'];
 		if(C('URL_SEPE')!=NULL){
 			$seperator=C('URL_SEPE');
 		}
 		else{
 			$seperator='/';
 		}
-		$path=str_replace($_SERVER['SCRIPT_NAME'].'/', '', $path);
-		$path=str_replace('index.php/','',$path);
 		$path=str_replace(C('URL_SUFFIX'),'',$path);
 		if (strstr($path, $seperator)) {
 			$path=explode($seperator, $path);

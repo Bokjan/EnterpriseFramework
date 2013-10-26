@@ -11,6 +11,7 @@ return array(
 	//'URL_SEPE'=>'-',
 	'URL_SUFFIX'=>'.html',
 	'URL_MODE'=>1,//0=>一般PATHINFO,1=>REWRITE+PATHINFO
+	'APP_URL'=>'http://localhost/',
 	//'TPL_SEPE'=>'-';
 	//'DEFAULT_METHOD'=>'index/test',
 	'GZIP'=>true,

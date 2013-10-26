@@ -61,7 +61,8 @@ function U($string){
 			$i++;
 		}
 		if(C('URL_MODE')==NULL||C('URL_MODE')==0){
-			$url='./index.php/'.$url;
+			//$url='./index.php/'.$url;
+			$url=C('APP_URL').'index.php/'.$url;
 		}
 		else{
 			$url='./'.$url;
@@ -72,7 +73,8 @@ function U($string){
 	else{
 		$class=explode('/', $string);
 		if(C('URL_MODE')==NULL||C('URL_MODE')==0){
-			$url='./index.php/';
+			//$url='./index.php/'.$url;
+			$url=C('APP_URL').'index.php/'.$url;
 		}
 		else{
 			$url='./';

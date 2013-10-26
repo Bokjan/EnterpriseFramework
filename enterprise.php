@@ -1,7 +1,7 @@
 <?php
 /**
  * EnterPrise Framework
- * @version 0.1.4
+ * @version 0.1.5
  * @author Bokjan Chan
  **/
 defined('EP_PATH') or define('EP_PATH', dirname($_SERVER['SCRIPT_FILENAME']).'/');
@@ -12,10 +12,11 @@ unset($ep_start);
 //读取基本方法
 require(EP_PATH.'Base/functions.php');
 require(EP_PATH.'Base/commons.php');
-//自动包含类相关操作
+//注册自动包含类函数
 spl_autoload_register('cloader');
+//初始化文件列表
 cloader();
-//读取配置
+//初始化配置
 $_config=require(EP_PATH.'Conf/conf.php');
 C($_config);
 //初始化钩子
@@ -50,9 +51,9 @@ if (IS_CLOUD) {
 	require(EP_PATH.'Base/io.php');
 }
 //读取其他框架文件
-foreach (get_folder('Lib') as $name) {
-	require_once(EP_PATH.'Lib/'.$name);
-}
+require(EP_PATH.'Lib/Action.class.php');
+require(EP_PATH.'Lib/Enterprise.class.php');
+require(EP_PATH.'Lib/epdb.class.php');
 unset($_config,$_wrapper,$name);
 //运行框架
 Enterprise::run();

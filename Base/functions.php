@@ -145,4 +145,32 @@ function time_stat(){
 	$total=($now-EP_START)*1000;
 	return round($total,4);
 }
+/**
+ *GET全局变量操作
+ *@param key 键名
+ *@param value=NULL 设置值
+ *@return mixed
+ */
+function get($key,$value=NULL){
+	if ($value==NULL) {
+		return $_GET[$key];
+	} else {
+		$_GET[$key]=$value;
+		return;
+	}
+}
+/**
+ *POST全局变量操作
+ *@param key 键名
+ *@param value=NULL 设置值
+ *@return mixed
+ */
+function post($key,$value=NULL){
+	if ($value==NULL) {
+		return $_POST[$key];
+	} else {
+		$_POST[$key]=$value;
+		return;
+	}
+}
 ?>
