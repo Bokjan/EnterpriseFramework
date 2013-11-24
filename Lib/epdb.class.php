@@ -164,6 +164,29 @@ class epdb{
 
 	}
 
+	public function selectArr(){
+		$query='SELECT * FROM '.$this->table;
+		if(isset($this->where)){
+			$query.=' WHERE '.$this->where;
+			unset($this->where);
+		}
+		if(isset($this->order)){
+			$order=explode('|', $this->order);
+			$query.=' ORDER BY `'.$order[0].'` '.$order[1];
+			unset($this->order);
+		}
+			$query.=' LIMIT 1';
+		$this->query=$query;
+		$res=$this->execute($query);
+		if (mysql_num_rows($res)>0) {
+			$result=mysql_fetch_assoc($res);
+		} else {
+			$result=NULL;
+		}
+		$this->res=$result;
+		return $result;
+	}
+
 	public function find(){
 		$query='SELECT * FROM '.$this->table;
 		if(isset($this->where)){
@@ -304,6 +327,27 @@ class epdb{
 		$this->query=$query;
 		$res=$this->execute($query);
 		return $res;
+	}
+
+	public function count(){
+		$query='SELECT count(*) FROM '.$this->table;
+		if(isset($this->where)){
+			$query.=' WHERE '.$this->where;
+			unset($this->where);
+		}
+		if(isset($this->order)){
+			$order=explode('|', $this->order);
+			$query.=' ORDER BY `'.$order[0].'` '.$order[1];
+			unset($this->order);
+		}
+		if(isset($this->limit)){
+			$query.=' LIMIT '.$this->limit;
+			unset($this->limit);
+		}
+		$this->query=$query;
+		$res=$this->execute($query);
+		$res=mysql_fetch_assoc($res);
+		return $res['count(*)'];
 	}
 }
 ?>
