@@ -164,7 +164,7 @@ class epdb{
 
 	}
 
-	public function selectArr(){
+	public function findArr(){
 		$query='SELECT * FROM '.$this->table;
 		if(isset($this->where)){
 			$query.=' WHERE '.$this->where;
