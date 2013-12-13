@@ -1,7 +1,7 @@
 <?php
 /**
  * EnterPrise Framework
- * @version 0.1.5
+ * @version 0.2.0
  * @author Bokjan Chan
  **/
 defined('EP_PATH') or define('EP_PATH', dirname($_SERVER['SCRIPT_FILENAME']).'/');

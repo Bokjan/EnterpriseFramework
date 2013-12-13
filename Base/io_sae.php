@@ -2,7 +2,7 @@
 /**
  * EnterPrise Framework
  * IO函数及初始化操作_新浪引擎
- * @version 0.1.2
+ * @version 0.2.0
  * @author Bokjan Chan
  **/
 //设置数据库

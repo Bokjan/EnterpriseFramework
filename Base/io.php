@@ -2,7 +2,7 @@
 /**
  * EnterPrise Framework
  * IO函数及初始化操作_标准环境
- * @version 0.1.0
+ * @version 0.2.0
  * @author Bokjan Chan
  **/
 /**

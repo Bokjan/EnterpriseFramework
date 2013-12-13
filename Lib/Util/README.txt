@@ -1,5 +1,5 @@
-IpLocation.class.phpĞèÒª´îÅäÊı¾İÎÄ¼şÊ¹ÓÃ
-ÏÂÔØ£º
+ï»¿IpLocation.class.phpéœ€è¦æ­é…æ•°æ®æ–‡ä»¶ä½¿ç”¨
+ä¸‹è½½ï¼š
 http://pan.baidu.com/s/1vNt32
 
 In order to use IpLocation.class.php, you need to put the data file to this folder.
