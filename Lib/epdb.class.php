@@ -175,7 +175,7 @@ class epdb{
 			$query.=' ORDER BY `'.$order[0].'` '.$order[1];
 			unset($this->order);
 		}
-			$query.=' LIMIT 1';
+		$query.=' LIMIT 1';
 		$this->query=$query;
 		$res=$this->execute($query);
 		if (mysql_num_rows($res)>0) {

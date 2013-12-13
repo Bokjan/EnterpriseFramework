@@ -173,4 +173,14 @@ function post($key,$value=NULL){
 		return;
 	}
 }
+/**
+ *获取客户端IP地址
+ */
+function get_ip(){
+	static $ip=NULL;
+	if($ip==NULL){
+		$ip=isset($_SERVER['REMOTE_ADDR'])?$_SERVER['REMOTE_ADDR']:NULL;
+	}
+	return $ip;
+}
 ?>
