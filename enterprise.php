@@ -22,6 +22,16 @@ C($_config);
 //初始化钩子
 $_hook=require(EP_PATH.'Conf/hook.php');
 H($_hook);
+//初始化语言
+$_lang=cookie('lang');
+if($_lang==NULL){
+	$_lang=C('LANG');
+	define('LANG',C('LANG'));
+	cookie('lang',C('LANG'),time()+2592000);
+}
+elseif($_lang=='zh_cn'){
+	define('LANG',$_lang);
+}
 //睿云引擎相关
 if (SMARTCLOUD) {
 	//检测是否为新浪应用引擎
@@ -54,7 +64,7 @@ if (IS_CLOUD) {
 require(EP_PATH.'Lib/Action.class.php');
 require(EP_PATH.'Lib/Enterprise.class.php');
 require(EP_PATH.'Lib/epdb.class.php');
-unset($_config,$_wrapper,$name);
+unset($_config,$_wrapper,$_lang);
 //运行框架
 Enterprise::run();
 ?>

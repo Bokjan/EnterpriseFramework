@@ -147,8 +147,8 @@ function time_stat(){
 }
 /**
  *GET全局变量操作
- *@param key 键名
- *@param value=NULL 设置值
+ *@param string $key 键名
+ *@param mixed $value=NULL 设置值
  *@return mixed
  */
 function get($key,$value=NULL){
@@ -161,8 +161,8 @@ function get($key,$value=NULL){
 }
 /**
  *POST全局变量操作
- *@param key 键名
- *@param value=NULL 设置值
+ *@param string $key 键名
+ *@param mixed $value=NULL 设置值
  *@return mixed
  */
 function post($key,$value=NULL){
@@ -182,5 +182,35 @@ function get_ip(){
 		$ip=isset($_SERVER['REMOTE_ADDR'])?$_SERVER['REMOTE_ADDR']:NULL;
 	}
 	return $ip;
+}
+/**
+ *导入语言包
+ *@param string $pack 语言包
+ *@return void
+ */
+function importLang($pack){
+	Lang(require(EP_PATH.'Lib/Lang/'.LANG.'.'.$pack.'.php'));
+	return;
+}
+/**
+ *语言包相关
+ *@param string $key 语句 | array 新包
+ *@return string 对应语言
+ */
+function Lang($key){
+	static $data=array();
+	if(is_array($key)){
+		return $data=array_merge($data,$key);
+	}
+	if (isset($key)) {
+			if(isset($data[$key])){
+			return $data[$key];
+		}
+		else{
+			return NULL;
+		}
+	} else {
+		return $data;
+	}
 }
 ?>

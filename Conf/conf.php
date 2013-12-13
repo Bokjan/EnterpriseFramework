@@ -15,5 +15,6 @@ return array(
 	//'TPL_SEPE'=>'-';
 	//'DEFAULT_METHOD'=>'index/test',
 	'GZIP'=>true,
+	'LANG'=>'zh_cn',
 	);
 ?>
