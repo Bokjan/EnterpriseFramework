@@ -27,7 +27,7 @@ class Action{
 	 *@param string $message 消息
 	 *@param string $jumpUrl (非必须)跳转URL
 	 */
-	function success($message,$jumpUrl=''){
+	function success($message='',$jumpUrl=''){
 		$this->jump($message,$jumpUrl,1);
 	}
 	/**
@@ -35,7 +35,7 @@ class Action{
 	 *@param string $message 消息
 	 *@param string $jumpUrl (非必须)跳转URL
 	 */
-	function error($message,$jumpUrl=''){
+	function error($message='',$jumpUrl=''){
 		$this->jump($message,$jumpUrl,0);
 	}
 	/**
@@ -45,7 +45,7 @@ class Action{
 	 *@param integer $wait 等待秒数
 	 *@param integer $status 状态 0=>失败,1=>成功
 	 */
-	function jump($message,$jumpUrl='',$status=1){
+	function jump($message='',$jumpUrl='',$status=1){
 		if ($status) {
 			//$status=1为真，输出为success版本
 			$this->set('message',$message);
@@ -53,7 +53,8 @@ class Action{
 				$this->set('waitSecond','2');
 			}
 			if ($jumpUrl=='') {
-				$this->set('jumpUrl',$_SERVER["HTTP_REFERER"]);
+				$jumpUrl=isset($_SERVER["HTTP_REFERER"])?$_SERVER["HTTP_REFERER"]:NULL;
+				$this->set('jumpUrl',$jumpUrl);
 			}else{
 				$this->set('jumpUrl',$jumpUrl);
 			}

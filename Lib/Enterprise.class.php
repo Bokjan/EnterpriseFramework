@@ -7,7 +7,7 @@
  */
 class Enterprise{
 	static function run(){
-		if(empty($_SERVER['PATH_INFO'])){
+		if(empty($_SERVER['PATH_INFO'])&&empty($_SERVER['REQUEST_URI'])){
 			$method=C('DEFAULT_METHOD');
 			if($method==NULL){
 				$ep_prog=new IndexAction();
@@ -30,7 +30,7 @@ class Enterprise{
 		}
 	}
 	static function dispatcher(){
-		$path=$_SERVER['PATH_INFO'];
+		$path=isset($_SERVER['PATH_INFO'])?$_SERVER['PATH_INFO']:$_SERVER['REQUEST_URI'];
 		if(C('URL_SEPE')!=NULL){
 			$seperator=C('URL_SEPE');
 		}
@@ -38,6 +38,7 @@ class Enterprise{
 			$seperator='/';
 		}
 		$path=str_replace(C('URL_SUFFIX'),'',$path);
+		$path=substr($path,1);
 		if (strstr($path, $seperator)) {
 			$path=explode($seperator, $path);
 			$action=$path[0].'Action';
