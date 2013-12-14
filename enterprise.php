@@ -64,7 +64,7 @@ if (IS_CLOUD) {
 require(EP_PATH.'Lib/Action.class.php');
 require(EP_PATH.'Lib/Enterprise.class.php');
 require(EP_PATH.'Lib/epdb.class.php');
-unset($_config,$_wrapper,$_lang);
+unset($_config,$_hook,$_lang);
 //运行框架
 Enterprise::run();
 ?>
