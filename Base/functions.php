@@ -100,7 +100,7 @@ function cookie($name,$value=NULL,$expire=NULL){
 	}
 }
 /**
- *简化的cookie操作
+ *简化的session操作
  *@param string $name 名
  *@param string $value=NULL 值
  *@return string | void
@@ -189,7 +189,7 @@ function get_ip(){
  *@return void
  */
 function importLang($pack){
-	Lang(require(EP_PATH.'Lib/Lang/'.LANG.'.'.$pack.'.php'));
+	Lang(require(EP_PATH.'Lib/Lang/'.LANG.'/'.$pack.'.php'));
 	return;
 }
 /**
