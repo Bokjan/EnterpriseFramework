@@ -84,7 +84,7 @@ function U($string){
 	}
 }
 /**
- *数据库模型实例化
+ *数据库对象实例化
  *@param string $table 数据表名
  *@return object 数据库操作对象
  */
@@ -96,19 +96,59 @@ function M($table=''){
 	return $ep_obj;
 }
 /**
- *钩子语句方法
- *@param string $key 语句键名
- *@return void
+ *文件缓存方法
+ *@param string $key 缓存文件键
+ *@param mixed $value 缓存数据
+ *@param integer $expire 过期时间(秒)
+ *@return NULL | mixed
  */
-function H($key){
-	static $ep_hook = array();
-	//读入配置
-	if(is_array($key)){
-		return $ep_hook=array_merge($ep_hook,$key);
+function F($key,$value=NULL,$expire=NULL){
+	if ($value==NULL) {
+		$value=unserialize(file_get_contents(EP_PATH.'Base/Cache/'.$key.'.cache'));
+		if(!isset($value['expire'])){
+			return $value['value'];
+		}
+		else{
+			if ($value['expire']<=time()) {
+				return $value['value'];
+			} else {
+				return NULL;
+			}
+		}
+	} else {
+		if ($expire!=NULL) {
+			$expire+=time();
+			$value=array(
+				'value'=>$value,
+				'expire'=>$expire
+				);
+		}
+		else{
+			$value=array('value'=>$value);
+		}
+		$value=serialize($value);
+		file_put_contents(EP_PATH.'Base/Cache/'.$key.'.cache', $value);
+		return;
 	}
-	if(isset($ep_hook[$key])){
-		eval($ep_hook[$key]);
-	}
-	return;
 }
-?>
+/**
+ *语言包相关
+ *@param string $key 语句 | array 新包
+ *@return string 对应语言
+ */
+function L($key){
+	static $data=array();
+	if(is_array($key)){
+		return $data=array_merge($data,$key);
+	}
+	if (isset($key)) {
+			if(isset($data[$key])){
+			return $data[$key];
+		}
+		else{
+			return NULL;
+		}
+	} else {
+		return $data;
+	}
+}

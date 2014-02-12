@@ -10,14 +10,14 @@ class Enterprise{
 		if(empty($_SERVER['PATH_INFO'])&&empty($_SERVER['REQUEST_URI'])){
 			$method=C('DEFAULT_METHOD');
 			if($method==NULL){
-				$ep_prog=new IndexAction();
+				$ep_prog=new IndexController();
 				$ep_prog->index();
-				define('ACTION','IndexAction');
+				define('ACTION','IndexController');
 				define('METHOD','Index');
 			}
 			else{
 				$method=explode('/', $method);
-				$action=$method[0].'Action';
+				$action=$method[0].'Controller';
 				$method=$method[1];
 				define('ACTION',$action);
 				define('METHOD',$method);
@@ -41,7 +41,7 @@ class Enterprise{
 		$path=substr($path,1);
 		if (strstr($path, $seperator)) {
 			$path=explode($seperator, $path);
-			$action=$path[0].'Action';
+			$action=$path[0].'Controller';
 			$method=$path[1];
 			unset($path[0],$path[1]);
 			$key=array();
@@ -53,7 +53,7 @@ class Enterprise{
 				}
 			}
 		} else {
-			$action=$path.'Action';
+			$action=$path.'Controller';
 			$method='index';
 		}
 		define('ACTION',$action);
@@ -75,11 +75,10 @@ class Enterprise{
 		}
 	}
 }
-class EpException extends Action{
+class EpException extends Controller{
 	function output($message){
 		$this->set('message',$message);
 		$this->display('ep_exception.tpl');
 		exit;
 	}
 }
-?>

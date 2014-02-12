@@ -1,7 +1,6 @@
 <?php
-class IndexAction extends Action{
+class IndexController extends Controller{
 	function index(){
 		//$this->success('OK');
 	}
 }
-?>

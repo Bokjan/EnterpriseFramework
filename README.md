@@ -1,6 +1,7 @@
 Enterprise Framework
 ===================
 Enterprise Framework is a light-weighted framework for php developers.
+*ATTENTION: ONLY WORKS WITH PHP 5.3+*
 
 Introductions
 ============

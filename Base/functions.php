@@ -28,8 +28,8 @@ function cloader($class=NULL){
 		foreach(get_folder('Model') as $name){
 			$list[]='Model/'.$name;
 		}
-		foreach(get_folder('Action') as $name){
-			$list[]='Action/'.$name;
+		foreach(get_folder('Controller') as $name){
+			$list[]='Controller/'.$name;
 		}
 	}
 }
@@ -137,13 +137,11 @@ function memory_stat($type=NULL){
 }
 /**
  *运行时间计算
- *@return int 运行耗时（毫秒）
+ *@return float 运行耗时秒数
  */
 function time_stat(){
-	$now=explode(' ', microtime());
-	$now=$now[0]+$now[1];
-	$total=($now-EP_START)*1000;
-	return round($total,4);
+	$total=floatval(str_replace(' ','.',microtime()))-EP_START;
+	return round($total,6);
 }
 /**
  *GET全局变量操作
@@ -175,13 +173,10 @@ function post($key,$value=NULL){
 }
 /**
  *获取客户端IP地址
+ *@return string IP地址
  */
 function get_ip(){
-	static $ip=NULL;
-	if($ip==NULL){
-		$ip=isset($_SERVER['REMOTE_ADDR'])?$_SERVER['REMOTE_ADDR']:NULL;
-	}
-	return $ip;
+	return isset($_SERVER['REMOTE_ADDR'])?$_SERVER['REMOTE_ADDR']:NULL;
 }
 /**
  *导入语言包
@@ -189,28 +184,6 @@ function get_ip(){
  *@return void
  */
 function importLang($pack){
-	Lang(require(EP_PATH.'Lib/Lang/'.LANG.'/'.$pack.'.php'));
+	L(require(EP_PATH.'Lib/Lang/'.LANG.'/'.$pack.'.php'));
 	return;
 }
-/**
- *语言包相关
- *@param string $key 语句 | array 新包
- *@return string 对应语言
- */
-function Lang($key){
-	static $data=array();
-	if(is_array($key)){
-		return $data=array_merge($data,$key);
-	}
-	if (isset($key)) {
-			if(isset($data[$key])){
-			return $data[$key];
-		}
-		else{
-			return NULL;
-		}
-	} else {
-		return $data;
-	}
-}
-?>
