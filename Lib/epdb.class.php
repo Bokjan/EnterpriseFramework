@@ -1,57 +1,44 @@
 <?php
 /**
- * epdb - EnterPrise Database Class
- * Transplanted from Egg Pain Database
- * Copyright (c) 2013 Bokjan Chan
+ * EPDB - Enterprise Database Class
+ * Copyright (c) 2013 - 2014 Bokjan Chan
  * For more information, visit bokjan.com
  * @author Bokjan Chan
- * @copyright Copyright (c) 2013, Bokjan Chan
+ * @copyright Copyright (c) 2013 - 2014, Bokjan Chan
  * @link https://bokjan.com
- * @version 0.2.0
+ * @version 0.2.1
  */
 class epdb{
+	private $dbhost='';
+	private $dbname='';
+	private $dbuser='';
+	private $dbpw='';
+	private $conn;
+	public  $prefix='';
+	public  $lastSql;
+	public  $table;
+	
 	function __construct($table){
-		if (C('DB_USEPREFIX')) {
-			$this->table=C('DB_PREFIX').$table;
-		} else {
-			$this->table=$table;
-		}
-		$conn_host=C('DB_HOST').':'.C('DB_PORT');
-		$this->conn=mysql_connect($conn_host,C('DB_USER'),C('DB_PW'));
-		mysql_query('SET NAMES UTF8');
-		return;
-	}
-
-	public function table($table){
-		if(C('DB_USEPREFIX')){
-			$this->table=C('DB_PREFIX').$table;
-		}
-		else{
-			$this->table=$table;
-		}
-		return;
+		$this->prefix=C('DB_PREFIX');
+		$this->dbhost=C('DB_HOME');
+		$this->dbname=C('DB_NAME');
+		$this->dbuser=C('DB_USER');
+		$this->dbpw=C('DB_PW');
+		$this->table=$this->prefix.$table;
+		$this->conn=new mysqli($this->dbhost, $this->dbuser, $this->dbpw, $this->dbname);
+		$this->execute('SET NAMES UTF8');
 	}
 
 	function __destruct(){
-		mysql_close($this->conn);
+		$this->conn->close();
 	}
 
-	public function getPk(){
-		$query="SELECT `COLUMN_NAME` FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `table_name`='{$this->table}' AND `COLUMN_KEY`='PRI'";
-		$res=$this->execute($query);
-		if($res!=NULL){
-			$res=mysql_fetch_assoc($res);
-			return $res['COLUMN_NAME'];
-		}
-		else{
-			return false;
-		}
+	public function table($table){
+		$this->table=$this->prefix.$table;
 	}
 
 	public function execute($query){
-		mysql_select_db(C('DB_NAME'),$this->conn);
-		$res=mysql_query($query);
-		return $res;
+		return $this->conn->query($query);
 	}
 
 	public function data($data){
@@ -70,24 +57,17 @@ class epdb{
 	public function where($data){
 		$this->data=$data;
 		if (is_array($data)) {
-			if(!isset($data['_logic'])){
-				$data['_logic']='AND';
-			}else{
-				$data['_logic']='OR';
-			}
 			$dc=count($data);
 			$where='';
 			$i=1;
 			foreach ($data as $k => $v) {
 				$i++;
-				if($k!='_logic'){
-				$where.='`'.$k.'`=\''.$v.'\'';}
+				$where.='`'.$k.'`=\''.$v.'\'';
 				if($i<$dc){
-					$where.=' '.$data['_logic'].' ';
+					$where.=' AND ';
 				}
 				$this->where=$where;
 			}
-
 		} else {
 			$this->where=$data;
 		}
@@ -102,36 +82,6 @@ class epdb{
 	public function limit($limit=1){
 		$this->limit=$limit;
 		return $this;
-	}
-
-	public function add(){
-		$i=0;
-		$j=0;
-		$kc=count($this->key);
-		$vc=count($this->value);
-		$query='INSERT INTO `'.$this->table.'` (';
-		foreach ($this->key as $k) {
-			$query.='`'.$k.'`';
-			$i++;
-			if ($i<$kc) {
-				$query.=',';
-			}
-		}
-		$query.=') VALUES (';
-		foreach($this->value as $v){
-			if($v=='NULL'){
-				$query.='NULL';
-			}else{
-				$query.='\''.$v.'\'';
-			}
-			$j++;
-			if ($j<$vc) {
-				$query.=',';
-			}
-		}
-		$query.=')';
-		$this->query=$query;
-		return $this->execute($query);
 	}
 
 	public function select(){
@@ -149,19 +99,14 @@ class epdb{
 			$query.=' LIMIT '.$this->limit;
 			unset($this->limit);
 		}
-		$this->query=$query;
+		$this->lastSql=$query;
 		$res=$this->execute($query);
-		if(mysql_num_rows($res)>0){
-			$result=array();
-			while($row=mysql_fetch_assoc($res)){
-				$result[]=$row;
-			}
-			return $result;	
+		if($res!=false){
+			return $res->fetch_all(MYSQLI_ASSOC);
 		}
 		else{
 			return NULL;
 		}
-
 	}
 
 	public function findArr(){
@@ -176,15 +121,15 @@ class epdb{
 			unset($this->order);
 		}
 		$query.=' LIMIT 1';
-		$this->query=$query;
+		unset($this->limit);
+		$this->lastSql=$query;
 		$res=$this->execute($query);
-		if (mysql_num_rows($res)>0) {
-			$result=mysql_fetch_assoc($res);
-		} else {
-			$result=NULL;
+		if($res!=false){
+			return $res->fetch_assoc();
 		}
-		$this->res=$result;
-		return $result;
+		else{
+			return NULL;
+		}
 	}
 
 	public function find(){
@@ -198,16 +143,16 @@ class epdb{
 			$query.=' ORDER BY `'.$order[0].'` '.$order[1];
 			unset($this->order);
 		}
-			$query.=' LIMIT 1';
-		$this->query=$query;
+		$query.=' LIMIT 1';
+		unset($this->limit);
+		$this->lastSql=$query;
 		$res=$this->execute($query);
-		if (mysql_num_rows($res)>0) {
-			$result=mysql_fetch_object($res);
-		} else {
-			$result=NULL;
+		if($res!=false){
+			return $res->fetch_object();
 		}
-		$this->res=$result;
-		return $result;
+		else{
+			return NULL;
+		}
 	}
 
 	public function getField($columns){
@@ -228,105 +173,14 @@ class epdb{
 			$query.=' LIMIT '.$this->limit;
 			unset($this->limit);
 		}
-		$this->query=$query;
+		$this->lastSql=$query;
 		$res=$this->execute($query);
-		if(mysql_num_rows($res)>0){
-			$result=array();
-			while ($row=mysql_fetch_assoc($res)) {
-				$result[]=$row;
-			}
-		} else{
-			$result=NULL;
+		if($res!=false){
+			return $res->fetch_all(MYSQLI_ASSOC);
 		}
-		$this->res=$result;
-		return $result;
-	}
-
-	public function save(){
-		$pk=$this->getPk();
-		$this->pk=$pk;
-		$data=$this->data;
-		if ($pk==false) {
-			$i=0;
-			$dc=count($data);
-			$query='UPDATE '.$this->table.' SET ';
-			foreach ($data as $k => $v) {
-				$i++;
-				$query.='`'.$k.'`=\''.$v.'\'';
-				if($i<$dc){
-					$query.=',';
-				}
-			}
-			if(!isset($this->where)){
-				return false;
-			}
-			else{
-				$query.=' WHERE '.$this->where;
-				unset($this->where);
-			}
-		} else {
-			$i=0;
-			$dc=count($data);
-			$query='UPDATE '.$this->table.' SET ';
-			foreach ($data as $k => $v) {
-				$i++;
-				$query.='`'.$k.'`=\''.$v.'\'';
-				if($i<$dc){
-					$query.=',';
-				}
-			}
-			if(!isset($data[$pk])){
-				if(!isset($this->where)){
-					return false;
-				}
-				else{
-					$query.=' WHERE '.$this->where;
-					unset($this->where);
-				}
-			}
-			else{
-				$query.=' WHERE `'.$pk.'`=\''.$data[$pk].'\'';
-			}
+		else{
+			return NULL;
 		}
-		$this->query=$query;
-		$res=$this->execute($query);
-		return $res;
-	}
-
-	public function setInc($field,$step=1,$math='+'){
-		$query='UPDATE '.$this->table.' SET '.$field.'='.$field;
-		$query.=$math.$step;
-		if(isset($this->where)){
-			$query.=' WHERE '.$this->where;
-			unset($this->where);
-		}
-		if(isset($this->limit)){
-			$query.=' LIMIT '.$this->limit;
-			unset($this->limit);
-		}
-		$this->query=$query;
-		$res=$this->execute($query);
-		return $res;
-	}
-
-	public function setDec($field,$step=1){
-		return $this->setInc($field,$step,'-');
-	}
-
-	public function delete(){
-		if(!isset($this->where)){
-			return false;
-		}
-		$query='DELETE FROM '.$this->table.' WHERE ';
-		unset($this->where);
-		$query.=$this->where;
-		if(isset($this->limit)){
-			$query.=' LIMIT '.$this->limit;
-			unset($this->limit);
-		}
-		$this->query=$query;
-		$res=$this->execute($query);
-		return $res;
 	}
 
 	public function count(){
@@ -344,10 +198,91 @@ class epdb{
 			$query.=' LIMIT '.$this->limit;
 			unset($this->limit);
 		}
-		$this->query=$query;
+		$this->lastSql=$query;
 		$res=$this->execute($query);
-		$res=mysql_fetch_assoc($res);
-		return $res['count(*)'];
+		if($res!=false){
+			$res=$res->fetch_assoc();
+			return $res['count(*)'];
+		}
+		else{
+			return NULL;
+		}
+	}
+
+	public function add(){
+		$i=0;
+		$j=0;
+		$kc=count($this->key);
+		$vc=count($this->value);
+		$query='INSERT INTO `'.$this->table.'` (';
+		foreach ($this->key as $k) {
+			$query.='`'.$k.'`';
+			$i++;
+			if ($i<$kc) {
+				$query.=',';
+			}
+		}
+		$query.=') VALUES (';
+		foreach($this->value as $v){
+			$query.='\''.$v.'\'';
+			$j++;
+			if ($j<$vc) {
+				$query.=',';
+			}
+		}
+		$query.=')';
+		$this->lastSql=$query;
+		return $this->execute($query);
+	}
+
+	public function save(){
+		$i=0;
+		$dc=count($this->data);
+		$query='UPDATE '.$this->table.' SET ';
+		foreach ($this->data as $k => $v) {
+			$i++;
+			$query.='`'.$k.'`=\''.$v.'\'';
+			if($i<$dc){
+				$query.=',';
+			}
+		}
+		$query.=' WHERE '.$this->where;
+		unset($this->where);
+		$this->lastSql=$query;
+		return $this->execute($query);
+	}
+
+	public function setInc($field,$step=1,$math='+'){
+		$query='UPDATE '.$this->table.' SET '.$field.'='.$field;
+		$query.=$math.$step;
+		if(isset($this->where)){
+			$query.=' WHERE '.$this->where;
+			unset($this->where);
+		}
+		if(isset($this->limit)){
+			$query.=' LIMIT '.$this->limit;
+			unset($this->limit);
+		}
+		$this->lastSql=$query;
+		return $this->execute($query);
+	}
+
+	public function setDec($field,$step=1){
+		return $this->setInc($field,$step,'-');
+	}
+
+	public function delete(){
+		if(!isset($this->where)){
+			return false;
+		}
+		$query='DELETE FROM '.$this->table.' WHERE ';
+		unset($this->where);
+		$query.=$this->where;
+		if(isset($this->limit)){
+			$query.=' LIMIT '.$this->limit;
+			unset($this->limit);
+		}
+		$this->lastSql=$query;
+		return $this->execute($query);
 	}
 }
-?>
