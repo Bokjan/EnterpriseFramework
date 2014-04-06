@@ -6,8 +6,8 @@
  **/
 defined('EP_PATH') or define('EP_PATH', dirname($_SERVER['SCRIPT_FILENAME']).'/');
 //时间相关
-const TIME=time();
-const EP_START=floatval(str_replace(' ','.',microtime()));
+define('TIME',time());
+define('EP_START',floatval(str_replace(' ','.',microtime())));
 //读取基本方法
 require(EP_PATH.'Base/functions.php');
 require(EP_PATH.'Base/commons.php');

@@ -85,7 +85,7 @@ class Controller{
 				$sepe='_';
 			}
 			if ($tpl=='') {
-				$action=str_replace('Action', '', ACTION);
+				$action=str_replace('Controller', '', ACTION);
 				$tpl=$action.$sepe.METHOD.'.html';
 			}
 		}

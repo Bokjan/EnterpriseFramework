@@ -10,10 +10,10 @@ class Enterprise{
 		if(empty($_SERVER['PATH_INFO'])&&empty($_SERVER['REQUEST_URI'])){
 			$method=C('DEFAULT_METHOD');
 			if($method==NULL){
-				$ep_prog=new IndexController();
-				$ep_prog->index();
 				define('ACTION','IndexController');
 				define('METHOD','Index');
+				$ep_prog=new IndexController();
+				$ep_prog->index();
 			}
 			else{
 				$method=explode('/', $method);
