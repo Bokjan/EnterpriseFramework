@@ -33,5 +33,7 @@ require(EP_PATH.'Lib/Controller.class.php');
 require(EP_PATH.'Lib/Enterprise.class.php');
 require(EP_PATH.'Lib/epdb.class.php');
 unset($_config,$_lang);
+//启动Session
+session_start();
 //运行框架
 Enterprise::run();

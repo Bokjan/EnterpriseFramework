@@ -100,13 +100,12 @@ function cookie($name,$value=NULL,$expire=NULL){
 	}
 }
 /**
- *简化的session操作
+ *简化的session赋值操作
  *@param string $name 名
  *@param string $value=NULL 值
  *@return string | void
  */
 function session($name,$value=NULL){
-	session_start();
 	if ($value==NULL) {
 		if (isset($_SESSION[$name])) {
 			return $_SESSION[$name];
@@ -117,6 +116,18 @@ function session($name,$value=NULL){
 		$_SESSION[$name]=$value;
 		return;
 	}
+}
+/**
+ *简化的session删除操作
+ *未传参数则为重置session
+ *@param string $key 键名
+ *@return void
+ */
+function session_del($key=NULL){
+	if($key==NULL)
+		session_destory();
+	else
+		unset($_SESSION[$key]);
 }
 /**
  *内存峰值开销统计
