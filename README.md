@@ -17,6 +17,6 @@ Enterprise Framework is designed with my & my friends' habits and there is just 
 
 Other
 =
-1. This framework is released with GNU General Public License version 3.
+1. This framework is released under Do What The Fuck You Want To Public License.
 2. This is just the alpha version so it may has some issues. Don't panic, contribute this project with us.
 3. ... to be continued
